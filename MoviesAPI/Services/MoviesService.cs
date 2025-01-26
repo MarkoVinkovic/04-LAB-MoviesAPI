@@ -1,11 +1,12 @@
 ﻿using MoviesAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MoviesAPI.Services
 {
-    public class MovieService
+    public class MoviesService
     {
         private AppDbContext _context;
-        public MovieService(AppDbContext context)
+        public MoviesService(AppDbContext context)
         {
             _context = context;
         }
@@ -13,20 +14,15 @@ namespace MoviesAPI.Services
         {
             var newMovie = new Movie()
             {
-                Title = movie.Title,
-                Description = movie.Description,
-                IsViewed = movie.IsViewed,
-                DateViewed = movie.IsViewed ? movie.DateViewed : null,
-                Rate = movie.IsViewed ? movie.Rate : null,
+                Id = movie.ID,
+                Name = movie.Ime,
+                Year = movie.Godina,
                 Genre = movie.Genre,
-                Author = movie.Author,
-                CoverPictureURL = movie.CoverPictureURL,
-                DateAdded = DateTime.Now,
             };
             _context.Movies.Add(newMovie);
             _context.SaveChanges();
         }
-        public List<Movie> GetAllBooks()
+        public List<Movie> GetAllMovies()
         {
             return _context.Movies.ToList();
         }
@@ -39,14 +35,10 @@ namespace MoviesAPI.Services
             var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
             if (movie != null)
             {
-                movie.Title = movieVM.Title;
-                movieVM.Description = movieVM.Description;
-                movie.IsViewed = movieVM.IsViewed;
-                movie.DateViewed = movieVM.IsViewed ? movieVM.DateViewed : null;
-                movie.Rate = movieVM.IsViewed ? movieVM.Rate : null;
+                movie.Id = movieVM.ID;
+                movieVM.Name = movieVM.Ime;
+                movie.Year = movieVM.Godina;
                 movie.Genre = movieVM.Genre;
-                movie.Author = movieVM.Author;
-                movie.CoverPictureURL = movieVM.CoverPictureURL;
                 _context.SaveChanges();
             }
             return movie;

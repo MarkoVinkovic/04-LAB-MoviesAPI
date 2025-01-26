@@ -8,40 +8,40 @@ namespace MoviesAPI.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        public MovieService MovieService { get; set; }
-        public MoviesController(MovieService moviesService)
+        public MoviesService MoviesService { get; set; }
+        public MoviesController(MoviesService moviesService)
         {
-            MovieService = moviesService;
+            MoviesService = moviesService;
         }
         [HttpPost]
         public IActionResult AddMovie([FromBody] MovieVM movie)
         {
-            MovieService.AddMovie(movie);
+            MoviesService.AddMovie(movie);
             return Ok();
         }
         [HttpGet]
         public IActionResult GetAllMovies()
         {
-            var allMovies = MovieService.GetAllMovies();
+            var allMovies = MoviesService.GetAllMovies();
             return Ok(allMovies);
         }
         [HttpGet("id")]
         public IActionResult GetMovieById([FromQuery] int id)
         {
-            var movie = MovieService.GetMovieById(id);
+            var movie = MoviesService.GetMovieById(id);
             return Ok(movie);
         }
         [HttpPut("id")]
         public IActionResult UpdateMovieById([FromQuery] int id,
         [FromBody] MovieVM movieVM)
         {
-            var updatedMovie = MovieService.UpdateMovieById(id, movieVM);
+            var updatedMovie = MoviesService.UpdateMovieById(id, movieVM);
             return Ok(updatedMovie);
         }
         [HttpDelete("id")]
         public IActionResult DeleteMovie([FromQuery] int id)
         {
-            MovieService.DeleteMovie(id);
+            MoviesService.DeleteMovie(id);
             return Ok();
         }
 
